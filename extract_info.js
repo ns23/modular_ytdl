@@ -12,21 +12,17 @@ module.exports = function (jsonPath) {
 
         'iurlsd': '/iurlsd',
         'author': '/author',
-        'video_id': '/video_id',
+        'videoId': '/video_id',
         'formats': '/formats',
+        'videoUrl':'/video_url',
     };
 
     let resp = {};
     for (var key in items) {
         if (items.hasOwnProperty(key)) {
-            console.log(key + " -> " + items[key]);
             resp[key] = db.getData(items[key]);
         }
     }
 
-    console.log(resp);
-
-    // console.log(data);
-
-    return {};
+    return resp;
 };

@@ -1,13 +1,13 @@
 /*jshint esversion: 6 */
 "use strict";
 
-letyoutubedl = function (configObject) {
+module.exports = function (config) {
 
     const path = require('path');
     const fs = require('fs');
     const ytdl = require("ytdl-core");
 
-    const url = 'https://www.youtube.com/watch?v=WhXefyLs-uw';
+    const url = config.videoUrl;
 
     const output = path.resolve(__dirname, 'video.mp4');
 
@@ -35,8 +35,22 @@ letyoutubedl = function (configObject) {
         console.log(response);
         //pass this response object to view
     });
-    video.on('end', () => {
-        process.stdout.write('\n\n');
+    let id = config.videoId;
+    video.on('end', ()=>{
+        deletefile();
     });
+
+
+    function deletefile() {
+        fs.unlink(path.resolve(__dirname, config.videoId + '.json'), function (err) {
+            if (err) {
+                throw err;
+            }
+
+            console.log('json file deleted');
+        });
+
+
+    }
 
 };

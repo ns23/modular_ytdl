@@ -1,14 +1,19 @@
 /*jshint esversion: 6 */
 "use strict";
 
-var utube = require("./utubedl");
-var extractInfo = require("./extract_info");
+let utube = require("./utubedl");
+let extractInfo = require("./extract_info");
+let yt = require("./download_video");
 
-var x = new utube();
-x.saveVideoToJson('yyd0rNyrlS8').then(function (res) {
-        var info = extractInfo(res);
+let downloadQueue = new Array()
+
+let x = new utube();
+x.saveVideoToJson('QjxScn7cKo8').then(function (res) {
+        let info = extractInfo(res);
+        downloadQueue.push(new yt(info));
 
     }
 );
 
-// var info =  extractInfo();
+console.log('download queue is-----------------');
+console.log(downloadQueue);

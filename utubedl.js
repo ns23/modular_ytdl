@@ -4,7 +4,6 @@
 module.exports = function () {
     const URl = require("url");
     const ytdl = require("ytdl-core");
-    const readline = require('readline');
     const path = require('path');
     const fs = require('fs');
 
@@ -65,6 +64,9 @@ module.exports = function () {
 
     };
 
+    /*
+    * Save video information to json
+    * */
     let saveVideoToJson = function (v) {
 
         return new Promise((resolve, reject) => {
