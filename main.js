@@ -1,11 +1,11 @@
-let utube = require('./utubedl');
+let Utube = require('./utubedl');
 let extractInfo = require('./extract_info');
 let yt = require('./download_video');
 
 let downloadQueue = new Array();
 let i = 0;
 
-let x = new utube();
+let x = new Utube();
 x.parsePlaylist('PL6gx4Cwl9DGDi9F_slcQK7knjtO8TUvUs').then(function(res) {
     console.log(res); //list of videos in youtue playlist
 }).catch(function(error) {

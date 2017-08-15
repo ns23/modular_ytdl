@@ -101,8 +101,6 @@ module.exports = function() {
                 }
             });
         });
-
-
     };
 
 
@@ -189,7 +187,6 @@ module.exports = function() {
         let numOfReq = 1;
 
         return new Promise((resolve, reject) => {
-
             getRequest(queryString).then((res) => {
                 if (numOfReq > 1) {
 
@@ -204,18 +201,14 @@ module.exports = function() {
                     result = res;
                     resolve(result);
                 }
-
                 //till all videos are retrived
                 if (res.hasOwnProperty('nextPageToken')) {
                     parsePlaylist(id, res.nextPageToken);
                 }
-
             }).catch((err) => {
                 console.log(err);
                 reject(err);
             });
-
-
         });
 
     }
