@@ -1,14 +1,17 @@
 {
-  "name": "modular_ytdl",
-  "version": "1.0.0",
-  "description": "",
-  "main": "main.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "ns23",
-  "license": "ISC",
-  "dependencies": {
-    "node-json-db": "^0.7.3"
-  }
+    "name": "modular_ytdl",
+    "version": "1.0.0",
+    "description": "",
+    "main": "main.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "ns23",
+    "license": "ISC",
+    "dependencies": {
+        "node-json-db": "^0.7.3",
+        "ytdl-core": "^0.15.0",
+        "jshint": "^2.9.5"
+
+    }
 }

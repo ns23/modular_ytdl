@@ -1,24 +1,25 @@
-/*jshint esversion: 6 */
-"use strict";
+module.exports = function(jsonPath, items = null) {
 
+    let JsonDB = require('node-json-db');
+    let db = new JsonDB(jsonPath, true, true);
 
-module.exports = function (jsonPath) {
+    /*
+     * Use default item list if none is passed
+     * */
+    if (typeof items !== 'object' || items === null) {
+        items = {
 
-    var JsonDB = require('node-json-db');
-    var db = new JsonDB(jsonPath, true, true);
+            'iurlsd': '/iurlsd',
+            'author': '/author',
+            'videoId': '/video_id',
+            'formats': '/formats',
+            'videoUrl': '/video_url',
 
-
-    var items = {
-
-        'iurlsd': '/iurlsd',
-        'author': '/author',
-        'videoId': '/video_id',
-        'formats': '/formats',
-        'videoUrl':'/video_url',
-    };
+        };
+    }
 
     let resp = {};
-    for (var key in items) {
+    for (let key in items) {
         if (items.hasOwnProperty(key)) {
             resp[key] = db.getData(items[key]);
         }
