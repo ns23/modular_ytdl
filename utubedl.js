@@ -54,6 +54,11 @@ module.exports = function() {
     };
 
 
+    function extractFormats(data) {
+        console.log(data.author);
+    }
+
+
     /*
      * Input:v(Video id)(type:string)example:7wNb0pHyGuI
      * Output:return a promise
@@ -217,12 +222,30 @@ module.exports = function() {
 
     }
 
+    let getVideoSize = function(param = null) {
+        let vUrl = 'https://www.youtube.com/watch?v=Ek17-Sh7jtA';
+        let itag = "43";
+        let video = ytdl(vUrl, { filter: function(format) { return format.itag === itag; } });
+        video.once('progress', (chunkLength, downloaded, total) => {
+            console.log(total);
+            video.emit('end');
+            console.log('still here');
+        });
+
+        video.on('end', () => {
+            console.log('done');
+        });
+
+    };
+
+
+
     return {
         parseUrl: parseUrl,
         validateId: validateId,
         getVideoInfo: getVideoInfo,
         saveVideoToJson: saveVideoToJson,
         parsePlaylist: parsePlaylist,
-
+        getVideoSize: getVideoSize,
     };
 };

@@ -24,6 +24,7 @@ module.exports = function(jsonPath, items = null) {
             resp[key] = db.getData(items[key]);
         }
     }
+    console.log()
 
     return resp;
 };
