@@ -14,18 +14,16 @@ x.parsePlaylist('PL6gx4Cwl9DGDi9F_slcQK7knjtO8TUvUs').then(function(res) {
 
 
 
-/* x.saveVideoToJson('QjxScn7cKo8').then(function(res) {
+/* function cb(params = null) {
+    console.log('Video id is');
+    console.log(params);
+}
+
+x.saveVideoToJson('QjxScn7cKo8').then(function(res) {
     let info = extractInfo(res);
     info.videoCount = i;
     i++;
     downloadQueue.push(new yt(info, cb));
 
 
-});
-
-
-
-function cb(params = null) {
-    console.log('Video id is');
-    console.log(params);
-} */
+}); */

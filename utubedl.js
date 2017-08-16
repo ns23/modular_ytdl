@@ -28,10 +28,14 @@ module.exports = function() {
 
         if (video && playlist) {
             response.format = 'vp';
+            response.videoId = video;
+            response.playlistId = playlist;
         } else if (video) {
             response.format = 'v';
+            response.videoId = video;
         } else if (playlist) {
             response.format = 'p';
+            response.playlistId = playlist;
         } else {
             response.format = null;
         }
