@@ -23,6 +23,7 @@ function cb(params = null) {
 }
 */
 let displayContent = function(param) {
+    console.log("param");
     console.log(param);
 }
 
@@ -33,7 +34,7 @@ x.saveVideoToJson('QjxScn7cKo8').then(function(res) {
     let params = {
         availableFormats: availableFormats,
         videoUrl: info.videoUrl,
-        displayContent: displayContent,
+        callback: displayContent,
     }
     let videoSizes = x.getVideoSize(params);
     console.log(videoSizes);

@@ -222,6 +222,12 @@ module.exports = function() {
 
     }
 
+    /**
+     * Get size of video based on itag,returns a callback
+     * 
+     * @param {any} [param=null] 
+     * Respone is object containg sizes of video
+     */
     let getVideoSize = function(param = null) {
         let vUrl = param.videoUrl;
         let itag = param.availableFormats;
@@ -232,21 +238,18 @@ module.exports = function() {
 
         let itemsProcessed = 0;
 
-        itag.forEach(function(element, index) {
-            // response[index].itag = element;
+        itag.forEach(function(element) {
             let video = ytdl(vUrl, { filter: function(format) { return format.itag === element; } });
             video.once('progress', (chunkLength, downloaded, total) => {
-                // console.log(total);
                 response.videoSize.push({ size: total, itag: element });
                 video.emit('end');
-                // console.log(response);
 
             });
 
             video.on('end', () => {
                 itemsProcessed = itemsProcessed + 1;
                 if (itemsProcessed === itag.length) {
-                    param.displayContent(response);
+                    param.callback(response);
                 }
             });
 
@@ -254,6 +257,12 @@ module.exports = function() {
 
     };
 
+    /**
+     * goes through format object and check if allowed itags are available in the format object
+     * 
+     * @param {any} formats 
+     * @returns array of itags that are availabel and are supported
+     */
     let getAvailableFormats = function(formats) {
         let SupportedItags = ['17', '18', '22', '36', '43'];
         let response = [];
