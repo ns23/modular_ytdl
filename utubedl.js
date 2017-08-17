@@ -223,20 +223,50 @@ module.exports = function() {
     }
 
     let getVideoSize = function(param = null) {
-        let vUrl = 'https://www.youtube.com/watch?v=Ek17-Sh7jtA';
-        let itag = "43";
-        let video = ytdl(vUrl, { filter: function(format) { return format.itag === itag; } });
-        video.once('progress', (chunkLength, downloaded, total) => {
-            console.log(total);
-            video.emit('end');
-            console.log('still here');
-        });
+        let vUrl = param.videoUrl;
+        let itag = param.availableFormats;
+        let response = {
+            url: vUrl,
+            videoSize: [],
+        };
 
-        video.on('end', () => {
-            console.log('done');
+        let itemsProcessed = 0;
+
+        itag.forEach(function(element, index) {
+            // response[index].itag = element;
+            let video = ytdl(vUrl, { filter: function(format) { return format.itag === element; } });
+            video.once('progress', (chunkLength, downloaded, total) => {
+                // console.log(total);
+                response.videoSize.push({ size: total, itag: element });
+                video.emit('end');
+                // console.log(response);
+
+            });
+
+            video.on('end', () => {
+                itemsProcessed = itemsProcessed + 1;
+                if (itemsProcessed === itag.length) {
+                    param.displayContent(response);
+                }
+            });
+
         });
 
     };
+
+    let getAvailableFormats = function(formats) {
+        let SupportedItags = ['17', '18', '22', '36', '43'];
+        let response = [];
+        for (var key in formats) {
+            if (formats.hasOwnProperty(key)) {
+                var itag = formats[key].itag;
+                if (SupportedItags.indexOf(itag) > -1) {
+                    response.push(itag);
+                }
+            }
+        }
+        return response;
+    }
 
 
 
@@ -247,5 +277,6 @@ module.exports = function() {
         saveVideoToJson: saveVideoToJson,
         parsePlaylist: parsePlaylist,
         getVideoSize: getVideoSize,
+        getAvailableFormats: getAvailableFormats,
     };
 };
