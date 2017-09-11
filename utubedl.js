@@ -257,6 +257,8 @@ module.exports = function() {
 
     };
 
+
+
     /**
      * goes through format object and check if allowed itags are available in the format object
      * 
@@ -278,6 +280,52 @@ module.exports = function() {
     }
 
 
+    /**
+     * 
+     * 
+     * @param {any} config 
+     * @param {any} cb 
+     */
+    let downloadVideo = function(config, cb) {
+
+        const url = config.videoUrl;
+        const output = path.resolve(__dirname, config.videoName);
+
+        const video = ytdl(url);
+
+        let starttime;
+        video.pipe(fs.createWriteStream(output));
+        video.once('response', () => {
+            starttime = Date.now();
+        });
+
+        let response = null;
+
+        video.on('progress', (chunkLength, downloaded, total) => {
+            const floatDownloaded = downloaded / total;
+            const downloadedMinutes = (Date.now() - starttime) / 1000 / 60;
+            response = {
+                'percentage': (floatDownloaded * 100).toFixed(2),
+                'downlaoded': (downloaded / 1024 / 1024).toFixed(2),
+                'total': (total / 1024 / 1024).toFixed(2),
+                'timeRemaining': (downloadedMinutes / floatDownloaded - downloadedMinutes).toFixed(2),
+                'timeDone': downloadedMinutes.toFixed(2),
+                'config': config,
+
+            };
+            cb(response);
+
+        });
+
+        video.on('end', () => {
+            cb('Finished downloading the video');
+        });
+
+    }
+
+
+
+
 
     return {
         parseUrl: parseUrl,
@@ -287,5 +335,6 @@ module.exports = function() {
         parsePlaylist: parsePlaylist,
         getVideoSize: getVideoSize,
         getAvailableFormats: getAvailableFormats,
+        downloadVideo: downloadVideo,
     };
 };
