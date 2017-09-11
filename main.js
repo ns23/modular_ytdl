@@ -24,8 +24,9 @@ format: //means the format of video/MP4|AVI|3GP
 var format = 'mp4'
 
 let config = {
-    videoUrl: 'https://www.youtube.com/watch?v=0_O97Se8bdE',
-    videoName: 'My video' + '.' + format, //name of the video
+    videoUrl: 'https://www.youtube.com/watch?v=krLkLormwI4',
+    videoName: 'Omkar Swarupa (Suresh Wadkar)' + '.' + format, //name of the video,
+    itag: '18',
 }
 
 x.downloadVideo(config, printData);

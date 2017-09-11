@@ -291,7 +291,7 @@ module.exports = function() {
         const url = config.videoUrl;
         const output = path.resolve(__dirname, config.videoName);
 
-        const video = ytdl(url);
+        const video = ytdl(url, { filter: function(format) { return format.itag === config.itag; } });
 
         let starttime;
         video.pipe(fs.createWriteStream(output));
