@@ -23,21 +23,21 @@ module.exports = function() {
         let playlist = parsedUrl.query.list;
 
         let response = {
-            url: url,
+            link: url,
         };
 
         if (video && playlist) {
-            response.format = 'vp';
+            response.isPlaylist = 'vp';
             response.videoId = video;
             response.playlistId = playlist;
         } else if (video) {
-            response.format = 'v';
+            response.isPlaylist = 'v';
             response.videoId = video;
         } else if (playlist) {
-            response.format = 'p';
+            response.isPlaylist = 'p';
             response.playlistId = playlist;
         } else {
-            response.format = null;
+            response.isPlaylist = null;
         }
 
         return response;

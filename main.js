@@ -2,46 +2,30 @@ let Utube = require('./utubedl');
 let extractInfo = require('./extract_info');
 let yt = require('./download_video');
 
-let downloadQueue = new Array();
-let i = 0;
+
+let printData = function(res) {
+    console.log(res);
+};
+
 
 
 let x = new Utube();
-// x.getVideoSize();
 
-/* x.parsePlaylist('PL6gx4Cwl9DGDi9F_slcQK7knjtO8TUvUs').then(function(res) {
-    console.log(res); //list of videos in youtue playlist
-}).catch(function(error) {
-    console.log(error);
-});
+/* 
+x.getVideoInfo() will return json object https://github.com/fent/node-ytdl-core/blob/master/example/info.json
 
+You need to pass follwoing information to downloadVideo
+videoUrl: url of the video
+Video name : name of the video that will be file name
+format: //means the format of video/MP4|AVI|3GP
 
-
-function cb(params = null) {
-    console.log('Video id is');
-    console.log(params);
-}
 */
-let displayContent = function(param) {
-    console.log("param");
-    console.log(param);
+
+var format = 'mp4'
+
+let config = {
+    videoUrl: 'https://www.youtube.com/watch?v=0_O97Se8bdE',
+    videoName: 'My video' + '.' + format, //name of the video
 }
 
-x.saveVideoToJson('QjxScn7cKo8').then(function(res) {
-    let info = extractInfo(res);
-    // console.log(info);
-    let availableFormats = x.getAvailableFormats(info.formats);
-    let params = {
-        availableFormats: availableFormats,
-        videoUrl: info.videoUrl,
-        callback: displayContent,
-    }
-    let videoSizes = x.getVideoSize(params);
-    console.log(videoSizes);
-    info.videoCount = i;
-
-    i++;
-    // downloadQueue.push(new yt(info, cb));
-
-
-});
+x.downloadVideo(config, printData);
