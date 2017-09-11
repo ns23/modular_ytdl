@@ -18,8 +18,6 @@ module.exports = function(config, cb) {
 
             console.log('json file deleted');
         });
-
-
     }
 
     let starttime;
@@ -28,10 +26,12 @@ module.exports = function(config, cb) {
         starttime = Date.now();
     });
 
+    let response = null;
+
     video.on('progress', (chunkLength, downloaded, total) => {
         const floatDownloaded = downloaded / total;
         const downloadedMinutes = (Date.now() - starttime) / 1000 / 60;
-        let response = {
+        response = {
             'percentage': (floatDownloaded * 100).toFixed(2),
             'downlaoded': (downloaded / 1024 / 1024).toFixed(2),
             'total': (total / 1024 / 1024).toFixed(2),
@@ -40,13 +40,20 @@ module.exports = function(config, cb) {
             'config': config,
 
         };
-        console.log(response);
+        cb(response);
+
         //pass this response object to view
     });
 
     video.on('end', (videoCount = config.videoCount) => {
-        deletefile();
-        cb(videoCount);
+        // deletefile();
+        // cb(videoCount);
     });
+
+
+
+    return {
+        getRespone: getRespone,
+    }
 
 };
